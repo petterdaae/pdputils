@@ -1,1 +1,1 @@
-module "pdputils"
+module "github.com/petterdaae/pdputils"
