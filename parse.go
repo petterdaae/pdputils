@@ -24,8 +24,7 @@ func ParseInstance(filename string) Instance {
 	offset2 := 8 + numberOfVehicles
 	for i := 0; i < numberOfVehicles; i++ {
 		line1 := strings.Split(lines[offset1], ",")
-		index := unsafeParse(line1[0])
-		index--
+		index := unsafeParse(line1[0]) - 1
 		vehicles[index] = Vehicle{
 			Index:        index,
 			HomeNode:     unsafeParse(line1[1]) - 1,
@@ -34,8 +33,8 @@ func ParseInstance(filename string) Instance {
 		}
 		line2 := strings.Split(lines[offset2], ",")[1:]
 		for _, elem := range line2 {
-			call := unsafeParse(elem)
-			vehicles[index].PossibleCalls = append(vehicles[index].PossibleCalls, call-1)
+			call := unsafeParse(elem) - 1
+			vehicles[index].PossibleCalls = append(vehicles[index].PossibleCalls, call)
 		}
 		offset1++
 		offset2++
@@ -46,8 +45,7 @@ func ParseInstance(filename string) Instance {
 	offset := 9 + (2 * numberOfVehicles)
 	for i := 0; i < numberOfCalls; i++ {
 		line := strings.Split(lines[offset], ",")
-		index := unsafeParse(line[0])
-		index--
+		index := unsafeParse(line[0]) - 1
 		calls[index] = Call{
 			Index:                 index,
 			OriginNode:            unsafeParse(line[1]) - 1,
@@ -73,12 +71,9 @@ func ParseInstance(filename string) Instance {
 	offset = 10 + (numberOfVehicles * 2) + numberOfCalls
 	for i := 0; i < numberOfVehicles*numberOfNodes*numberOfNodes; i++ {
 		line := strings.Split(lines[offset], ",")
-		vehicle := unsafeParse(line[0])
-		origin := unsafeParse(line[1])
-		destination := unsafeParse(line[2])
-		vehicle--
-		origin--
-		destination--
+		vehicle := unsafeParse(line[0]) - 1
+		origin := unsafeParse(line[1]) - 1
+		destination := unsafeParse(line[2]) - 1
 		travelTimesAndCosts[vehicle][origin][destination] = TravelTimeAndCost{
 			Time: unsafeParse(line[3]),
 			Cost: unsafeParse(line[4]),
@@ -94,10 +89,8 @@ func ParseInstance(filename string) Instance {
 	offset++
 	for i := 0; i < numberOfVehicles*numberOfCalls; i++ {
 		line := strings.Split(lines[offset], ",")
-		vehicle := unsafeParse(line[0])
-		call := unsafeParse(line[1])
-		vehicle--
-		call--
+		vehicle := unsafeParse(line[0]) - 1
+		call := unsafeParse(line[1]) - 1
 		nodeTimesAndCosts[vehicle][call] = NodeTimeAndCost{
 			OriginTime:      unsafeParse(line[2]),
 			OriginCost:      unsafeParse(line[3]),

@@ -55,6 +55,8 @@ func IsFeasible(instance Instance, solution []int) (bool, string) {
 				if currentTime < call.LowerTimeDelivery {
 					currentTime = call.LowerTimeDelivery
 				}
+
+				currentTime += instance.NodeTimesAndAndCosts[i][c].DestinationTime
 			} else {
 				currentCalls[c] = true
 				currentTime += instance.TravelTimesAndCosts[i][currentNode][call.OriginNode].Time
@@ -67,6 +69,8 @@ func IsFeasible(instance Instance, solution []int) (bool, string) {
 				if currentTime < call.LowerTimePickup {
 					currentTime = call.LowerTimePickup
 				}
+
+				currentTime += instance.NodeTimesAndAndCosts[i][c].OriginTime
 			}
 		}
 
