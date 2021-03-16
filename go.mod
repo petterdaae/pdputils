@@ -1,1 +1,3 @@
-module "github.com/petterdaae/pdputils"
+module github.com/petterdaae/pdputils
+
+go 1.15

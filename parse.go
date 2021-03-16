@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func ParseInstance(filename string) Instance {
+func ParseInstance(filename string) *Instance {
 	data, err := ioutil.ReadFile(filename)
 	check(err)
 
@@ -100,7 +100,7 @@ func ParseInstance(filename string) Instance {
 		offset++
 	}
 
-	return Instance{
+	return &Instance{
 		NumberOfNodes:        numberOfNodes,
 		NumberOfVehicles:     numberOfVehicles,
 		NumberOfCalls:        numberOfCalls,
