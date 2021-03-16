@@ -1,6 +1,6 @@
 package pdputils
 
-func Cost(instance Instance, solution []int) int {
+func Cost(instance *Instance, solution []int) int {
 	// Strip outsourced calls
 	zeroIndices := getZeroIndices(solution)
 	outSourced := solution[zeroIndices[len(zeroIndices)-1]+1:]

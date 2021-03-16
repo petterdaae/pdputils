@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func IsFeasible(instance Instance, solution []int) (bool, string) {
+func IsFeasible(instance *Instance, solution []int) (bool, string) {
 	startIndex := 0
 	zeroIndices := getZeroIndices(solution)
 	for i := 0; i < instance.NumberOfVehicles; i++ {
