@@ -17,6 +17,7 @@ func ParseInstance(instance *Instance, filename string) {
 	numberOfNodes := unsafeParse(lines[1])
 	numberOfVehicles := unsafeParse(lines[3])
 	numberOfCalls := unsafeParse(lines[numberOfVehicles+5+1])
+	calls := make([]Call, numberOfCalls)
 	instance.Compatibility = make([][]bool, numberOfVehicles+1)
 	for i := 0; i < numberOfVehicles+1; i++ {
 		instance.Compatibility[i] = make([]bool, instance.NumberOfCalls)
@@ -41,6 +42,8 @@ func ParseInstance(instance *Instance, filename string) {
 		line2 := strings.Split(lines[offset2], ",")[1:]
 		for _, elem := range line2 {
 			call := unsafeParse(elem) - 1
+			vehicles[index].PossibleCalls = append(vehicles[index].PossibleCalls, call)
+			calls[call].PossibleVehicles = append(calls[call].PossibleVehicles, index)
 			instance.Compatibility[index][call] = true
 		}
 		offset1++
@@ -48,7 +51,6 @@ func ParseInstance(instance *Instance, filename string) {
 	}
 
 	// Parse calls
-	calls := make([]Call, numberOfCalls)
 	offset := 9 + (2 * numberOfVehicles)
 	for i := 0; i < numberOfCalls; i++ {
 		line := strings.Split(lines[offset], ",")

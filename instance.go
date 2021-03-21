@@ -12,10 +12,11 @@ type Instance struct {
 }
 
 type Vehicle struct {
-	Index        int
-	HomeNode     int
-	StartingTime int
-	Capacity     int
+	Index         int
+	HomeNode      int
+	StartingTime  int
+	Capacity      int
+	PossibleCalls []int
 }
 
 type Call struct {
@@ -28,6 +29,7 @@ type Call struct {
 	UpperTimePickup       int
 	LowerTimeDelivery     int
 	UpperTimeDelivery     int
+	PossibleVehicles      []int
 }
 
 type TravelTimeAndCost struct {
