@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func ParseInstance(filename string) *Instance {
+func ParseInstance(instance *Instance, filename string) {
 	data, err := ioutil.ReadFile(filename)
 	check(err)
 
@@ -17,6 +17,13 @@ func ParseInstance(filename string) *Instance {
 	numberOfNodes := unsafeParse(lines[1])
 	numberOfVehicles := unsafeParse(lines[3])
 	numberOfCalls := unsafeParse(lines[numberOfVehicles+5+1])
+	instance.Compatibility = make([][]bool, numberOfVehicles+1)
+	for i := 0; i < numberOfVehicles+1; i++ {
+		instance.Compatibility[i] = make([]bool, instance.NumberOfCalls)
+	}
+	for i := 0; i < instance.NumberOfCalls; i++ {
+		instance.Compatibility[numberOfVehicles][i] = true
+	}
 
 	// Parse vehicles
 	vehicles := make([]Vehicle, numberOfVehicles)
@@ -34,7 +41,7 @@ func ParseInstance(filename string) *Instance {
 		line2 := strings.Split(lines[offset2], ",")[1:]
 		for _, elem := range line2 {
 			call := unsafeParse(elem) - 1
-			vehicles[index].PossibleCalls = append(vehicles[index].PossibleCalls, call)
+			instance.Compatibility[index][call] = true
 		}
 		offset1++
 		offset2++
@@ -100,13 +107,11 @@ func ParseInstance(filename string) *Instance {
 		offset++
 	}
 
-	return &Instance{
-		NumberOfNodes:        numberOfNodes,
-		NumberOfVehicles:     numberOfVehicles,
-		NumberOfCalls:        numberOfCalls,
-		Vehicles:             vehicles,
-		Calls:                calls,
-		TravelTimesAndCosts:  travelTimesAndCosts,
-		NodeTimesAndAndCosts: nodeTimesAndCosts,
-	}
+	instance.NumberOfNodes = numberOfNodes
+	instance.NumberOfVehicles = numberOfVehicles
+	instance.NumberOfCalls = numberOfCalls
+	instance.Vehicles = vehicles
+	instance.Calls = calls
+	instance.TravelTimesAndCosts = travelTimesAndCosts
+	instance.NodeTimesAndAndCosts = nodeTimesAndCosts
 }

@@ -8,14 +8,14 @@ type Instance struct {
 	Calls                []Call
 	TravelTimesAndCosts  [][][]TravelTimeAndCost // [vehicle, origin, destination]
 	NodeTimesAndAndCosts [][]NodeTimeAndCost     // [vehicle, call]
+	Compatibility        [][]bool
 }
 
 type Vehicle struct {
-	Index         int
-	HomeNode      int
-	StartingTime  int
-	Capacity      int
-	PossibleCalls []int
+	Index        int
+	HomeNode     int
+	StartingTime int
+	Capacity     int
 }
 
 type Call struct {

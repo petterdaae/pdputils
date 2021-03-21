@@ -13,7 +13,7 @@ func IsFeasible(instance *Instance, solution []int) (bool, string) {
 
 		// 1. Check that route is compatible with vehicle
 		for _, call := range route {
-			if !contains(vehicle.PossibleCalls, call) {
+			if !instance.Compatibility[i][call] {
 				return false, fmt.Sprintf("incompatible vehicle and call (%d, %d)", i, call)
 			}
 		}
