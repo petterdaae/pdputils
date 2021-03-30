@@ -8,7 +8,7 @@ type Instance struct {
 	Calls                []Call
 	TravelTimesAndCosts  [][][]TravelTimeAndCost // [vehicle, origin, destination]
 	NodeTimesAndAndCosts [][]NodeTimeAndCost     // [vehicle, call]
-	Compatibility        [][]bool
+	Compatibility        [][]bool                // [vehicle, call]
 }
 
 type Vehicle struct {

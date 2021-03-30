@@ -20,9 +20,9 @@ func ParseInstance(instance *Instance, filename string) {
 	calls := make([]Call, numberOfCalls)
 	instance.Compatibility = make([][]bool, numberOfVehicles+1)
 	for i := 0; i < numberOfVehicles+1; i++ {
-		instance.Compatibility[i] = make([]bool, instance.NumberOfCalls)
+		instance.Compatibility[i] = make([]bool, numberOfCalls)
 	}
-	for i := 0; i < instance.NumberOfCalls; i++ {
+	for i := 0; i < numberOfCalls; i++ {
 		instance.Compatibility[numberOfVehicles][i] = true
 	}
 
