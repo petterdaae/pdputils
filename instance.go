@@ -8,6 +8,7 @@ type Instance struct {
 	Calls                []Call
 	TravelTimesAndCosts  [][][]TravelTimeAndCost // [vehicle, origin, destination]
 	NodeTimesAndAndCosts [][]NodeTimeAndCost     // [vehicle, call]
+	Compatibility        [][]bool
 }
 
 type Vehicle struct {
@@ -28,6 +29,7 @@ type Call struct {
 	UpperTimePickup       int
 	LowerTimeDelivery     int
 	UpperTimeDelivery     int
+	PossibleVehicles      []int
 }
 
 type TravelTimeAndCost struct {

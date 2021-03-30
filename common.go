@@ -15,15 +15,6 @@ func getZeroIndices(arr []int) []int {
 	return indices
 }
 
-func contains(arr []int, x int) bool {
-	for _, elem := range arr {
-		if elem == x {
-			return true
-		}
-	}
-	return false
-}
-
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)
