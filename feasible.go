@@ -1,7 +1,7 @@
 package pdputils
 
 func IsFeasible(instance *Instance, solution *Solution) bool {
-	for i := 0; i <= instance.NumberOfVehicles; i++ {
+	for i := 0; i < instance.NumberOfVehicles; i++ {
 		vehicle := instance.Vehicles[i]
 
 		// 1. Check that route is compatible with vehicle
