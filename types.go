@@ -43,3 +43,7 @@ type NodeTimeAndCost struct {
 	DestinationTime int
 	DestinationCost int
 }
+
+type Solution struct {
+    Routes [][]int
+}

@@ -1,20 +1,13 @@
 package pdputils
 
-func Cost(instance *Instance, solution []int) int {
-	// Strip outsourced calls
-	zeroIndices := getZeroIndices(solution)
-	outSourced := solution[zeroIndices[len(zeroIndices)-1]+1:]
-	solution = solution[:zeroIndices[len(zeroIndices)-1]]
-
+func Cost(instance *Instance, solution Solution) int {
 	cost := 0
-	startIndex := 0
 
 	// Node and travel costs
 	for v := 0; v < instance.NumberOfVehicles; v++ {
-		route := solution[startIndex:zeroIndices[v]]
 		startedCalls := make(map[int]bool)
 		previousNode := instance.Vehicles[v].HomeNode
-		for _, c := range route {
+		for _, c := range solution.Routes[v] {
 			call := instance.Calls[c]
 			if _, present := startedCalls[c]; present {
 				cost += instance.NodeTimesAndAndCosts[v][c].DestinationCost
@@ -27,12 +20,11 @@ func Cost(instance *Instance, solution []int) int {
 				startedCalls[c] = true
 			}
 		}
-		startIndex = zeroIndices[v] + 1
 	}
 
 	// Cost of not transporting
 	currentCalls := make(map[int]bool)
-	for _, node := range outSourced {
+	for _, node := range solution.Routes[instance.NumberOfVehicles] {
 		if _, present := currentCalls[node]; !present {
 			cost += instance.Calls[node].CostOfNotTransporting
 			currentCalls[node] = true

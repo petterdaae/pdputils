@@ -5,16 +5,6 @@ import (
 	"strconv"
 )
 
-func getZeroIndices(arr []int) []int {
-	var indices []int
-	for i, elem := range arr {
-		if elem == -1 {
-			indices = append(indices, i)
-		}
-	}
-	return indices
-}
-
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)
