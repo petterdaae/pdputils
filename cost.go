@@ -1,6 +1,6 @@
 package pdputils
 
-func Cost(instance *Instance, solution Solution) int {
+func Cost(instance *Instance, solution *Solution) int {
 	cost := 0
 
 	// Node and travel costs

@@ -1,6 +1,6 @@
 package pdputils
 
-func IsFeasible(instance *Instance, solution Solution) bool {
+func IsFeasible(instance *Instance, solution *Solution) bool {
 	for i := 0; i <= instance.NumberOfVehicles; i++ {
 		vehicle := instance.Vehicles[i]
 
