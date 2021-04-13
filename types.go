@@ -45,5 +45,5 @@ type NodeTimeAndCost struct {
 }
 
 type Solution struct {
-    Routes [][]int
+	Routes [][]int
 }

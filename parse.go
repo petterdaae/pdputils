@@ -55,17 +55,15 @@ func ParseInstance(instance *Instance, filename string) {
 	for i := 0; i < numberOfCalls; i++ {
 		line := strings.Split(lines[offset], ",")
 		index := unsafeParse(line[0]) - 1
-		calls[index] = Call{
-			Index:                 index,
-			OriginNode:            unsafeParse(line[1]) - 1,
-			DestinationNode:       unsafeParse(line[2]) - 1,
-			Size:                  unsafeParse(line[3]),
-			CostOfNotTransporting: unsafeParse(line[4]),
-			LowerTimePickup:       unsafeParse(line[5]),
-			UpperTimePickup:       unsafeParse(line[6]),
-			LowerTimeDelivery:     unsafeParse(line[7]),
-			UpperTimeDelivery:     unsafeParse(line[8]),
-		}
+		calls[index].Index = index
+		calls[index].OriginNode = unsafeParse(line[1]) - 1
+		calls[index].DestinationNode = unsafeParse(line[2]) - 1
+		calls[index].Size = unsafeParse(line[3])
+		calls[index].CostOfNotTransporting = unsafeParse(line[4])
+		calls[index].LowerTimePickup = unsafeParse(line[5])
+		calls[index].UpperTimePickup = unsafeParse(line[6])
+		calls[index].LowerTimeDelivery = unsafeParse(line[7])
+		calls[index].UpperTimeDelivery = unsafeParse(line[8])
 		offset++
 	}
 
