@@ -9,6 +9,7 @@ type Instance struct {
 	TravelTimesAndCosts  [][][]TravelTimeAndCost // [vehicle, origin, destination]
 	NodeTimesAndAndCosts [][]NodeTimeAndCost     // [vehicle, call]
 	Compatibility        [][]bool                // [vehicle, call]
+	CurrentCalls         []bool                  // Used for cost/feasibility checks
 }
 
 type Vehicle struct {

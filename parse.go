@@ -114,4 +114,5 @@ func ParseInstance(instance *Instance, filename string) {
 	instance.Calls = calls
 	instance.TravelTimesAndCosts = travelTimesAndCosts
 	instance.NodeTimesAndAndCosts = nodeTimesAndCosts
+	instance.CurrentCalls = make([]bool, numberOfCalls)
 }

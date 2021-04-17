@@ -16,3 +16,9 @@ func unsafeParse(number string) int {
 	check(err)
 	return parsed
 }
+
+func (instance *Instance) CleanUpCurrentCalls() {
+	for i := 0; i < instance.NumberOfCalls; i++ {
+		instance.CurrentCalls[i] = false
+	}
+}

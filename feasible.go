@@ -13,18 +13,18 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 
 		// 2. Check vehicle capacity
 		currentLoad := 0
-		currentCalls := make([]bool, instance.NumberOfCalls)
 		for _, node := range solution.Routes[i] {
 			call := instance.Calls[node]
-			if currentCalls[node] {
-				currentCalls[node] = false
+			if instance.CurrentCalls[node] {
+				instance.CurrentCalls[node] = false
 				currentLoad -= call.Size
 				continue
 			}
-			currentCalls[node] = true
+			instance.CurrentCalls[node] = true
 			currentLoad += call.Size
 
 			if currentLoad > vehicle.Capacity {
+				instance.CleanUpCurrentCalls()
 				return false
 			}
 		}
@@ -35,12 +35,13 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 		for _, c := range solution.Routes[i] {
 			call := instance.Calls[c]
 
-			if currentCalls[c] {
-				currentCalls[c] = false
+			if instance.CurrentCalls[c] {
+				instance.CurrentCalls[c] = false
 				currentTime += instance.TravelTimesAndCosts[i][currentNode][call.DestinationNode].Time
 				currentNode = call.DestinationNode
 
 				if currentTime > call.UpperTimeDelivery {
+					instance.CleanUpCurrentCalls()
 					return false
 				}
 
@@ -50,11 +51,12 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 
 				currentTime += instance.NodeTimesAndAndCosts[i][c].DestinationTime
 			} else {
-				currentCalls[c] = true
+				instance.CurrentCalls[c] = true
 				currentTime += instance.TravelTimesAndCosts[i][currentNode][call.OriginNode].Time
 				currentNode = call.OriginNode
 
 				if currentTime > call.UpperTimePickup {
+					instance.CleanUpCurrentCalls()
 					return false
 				}
 
