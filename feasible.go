@@ -13,10 +13,10 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 
 		// 2. Check vehicle capacity
 		currentLoad := 0
-		currentCalls := make(map[int]bool)
+		currentCalls := make([]bool, instance.NumberOfCalls)
 		for _, node := range solution.Routes[i] {
 			call := instance.Calls[node]
-			if value, present := currentCalls[node]; present && value {
+			if currentCalls[node] {
 				currentCalls[node] = false
 				currentLoad -= call.Size
 				continue
@@ -32,11 +32,10 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 		// 3. Check time windows
 		currentNode := vehicle.HomeNode
 		currentTime := vehicle.StartingTime
-		currentCalls = make(map[int]bool)
 		for _, c := range solution.Routes[i] {
 			call := instance.Calls[c]
 
-			if value, present := currentCalls[c]; present && value {
+			if currentCalls[c] {
 				currentCalls[c] = false
 				currentTime += instance.TravelTimesAndCosts[i][currentNode][call.DestinationNode].Time
 				currentNode = call.DestinationNode
