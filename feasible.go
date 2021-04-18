@@ -1,30 +1,31 @@
 package pdputils
 
 func IsFeasible(instance *Instance, solution *Solution) bool {
+	currentCalls := make([]bool, instance.NumberOfCalls)
 	for i := 0; i < instance.NumberOfVehicles; i++ {
 		vehicle := instance.Vehicles[i]
+		ln := len(solution.Routes[i])
 
 		// 1. Check that route is compatible with vehicle
-		for _, call := range solution.Routes[i] {
-			if !instance.Compatibility[i][call] {
+		for j := 0; j < ln; j++ {
+			if !instance.Compatibility[i][solution.Routes[i][j]] {
 				return false
 			}
 		}
 
 		// 2. Check vehicle capacity
 		currentLoad := 0
-		for _, node := range solution.Routes[i] {
-			call := instance.Calls[node]
-			if instance.CurrentCalls[node] {
-				instance.CurrentCalls[node] = false
+		for j := 0; j < ln; j++ {
+			call := instance.Calls[solution.Routes[i][j]]
+			if currentCalls[solution.Routes[i][j]] {
+				currentCalls[solution.Routes[i][j]] = false
 				currentLoad -= call.Size
 				continue
 			}
-			instance.CurrentCalls[node] = true
+			currentCalls[solution.Routes[i][j]] = true
 			currentLoad += call.Size
 
 			if currentLoad > vehicle.Capacity {
-				instance.CleanUpCurrentCalls()
 				return false
 			}
 		}
@@ -32,16 +33,15 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 		// 3. Check time windows
 		currentNode := vehicle.HomeNode
 		currentTime := vehicle.StartingTime
-		for _, c := range solution.Routes[i] {
-			call := instance.Calls[c]
+		for j := 0; j < ln; j++ {
+			call := instance.Calls[solution.Routes[i][j]]
 
-			if instance.CurrentCalls[c] {
-				instance.CurrentCalls[c] = false
+			if currentCalls[solution.Routes[i][j]] {
+				currentCalls[solution.Routes[i][j]] = false
 				currentTime += instance.TravelTimesAndCosts[i][currentNode][call.DestinationNode].Time
 				currentNode = call.DestinationNode
 
 				if currentTime > call.UpperTimeDelivery {
-					instance.CleanUpCurrentCalls()
 					return false
 				}
 
@@ -49,14 +49,13 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 					currentTime = call.LowerTimeDelivery
 				}
 
-				currentTime += instance.NodeTimesAndAndCosts[i][c].DestinationTime
+				currentTime += instance.NodeTimesAndAndCosts[i][solution.Routes[i][j]].DestinationTime
 			} else {
-				instance.CurrentCalls[c] = true
+				currentCalls[solution.Routes[i][j]] = true
 				currentTime += instance.TravelTimesAndCosts[i][currentNode][call.OriginNode].Time
 				currentNode = call.OriginNode
 
 				if currentTime > call.UpperTimePickup {
-					instance.CleanUpCurrentCalls()
 					return false
 				}
 
@@ -64,7 +63,7 @@ func IsFeasible(instance *Instance, solution *Solution) bool {
 					currentTime = call.LowerTimePickup
 				}
 
-				currentTime += instance.NodeTimesAndAndCosts[i][c].OriginTime
+				currentTime += instance.NodeTimesAndAndCosts[i][solution.Routes[i][j]].OriginTime
 			}
 		}
 	}
