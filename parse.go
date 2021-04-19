@@ -24,6 +24,7 @@ func ParseInstance(instance *Instance, filename string) {
 	}
 	for i := 0; i < numberOfCalls; i++ {
 		instance.Compatibility[numberOfVehicles][i] = true
+		calls[i].PossibleVehicles = append(calls[i].PossibleVehicles, numberOfVehicles)
 	}
 
 	// Parse vehicles
